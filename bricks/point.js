@@ -46,11 +46,8 @@ Point.prototype.lineTo = function (ctx, Point, options){
 Point.prototype.distanceTo = function (Point){
 	var xs = Point.x - this.x;
   var ys = Point.y - this.y;
- 
-  xs = xs * xs;
-  ys = ys * ys;
- 
-  return Math.sqrt( xs + ys );
+
+  return Math.sqrt( (xs * xs) + (ys * ys));
 }
 
 Point.prototype.copy = function (){
@@ -83,7 +80,7 @@ Point.prototype.translate = function (DDVector, options) {
 	options.apply = options.apply || false;
 
 	var x = this.x+(DDVector.x*options.scale),
-		y = this.y+(DDVector.y*options.scale);
+			y = this.y+(DDVector.y*options.scale);
 
 	if(options.apply){
 		this.x = x;

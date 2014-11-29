@@ -1,5 +1,11 @@
 CONSTANTS = {
-	distanceCheck: 150
+	distanceCheck: 50,
+	numberOfParticles: 550,
+	particleColor: 'rgb(255,255,255)',
+	particleSize: 0.001,
+	strokeStyle: 'rgba(255, 255, 255, {$opacity})',
+	lineWidth: 0.5,
+	speedScale: 0.25
 }
 
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
@@ -9,15 +15,12 @@ canvas.init();
 var particles = [],
 		mouseParticle = new Particle(500, 500);
 
-for(var i = 0, l = 150; i < l; i++){
-	var x = Math.random()*canvas.el.width,
-			y = Math.random()*canvas.el.height;
+for(var i = 0, l = CONSTANTS.numberOfParticles; i < l; i++){
+	var x = Math.round(Math.random()*canvas.el.width),
+			y = Math.round(Math.random()*canvas.el.height);
 
 	particles.push(new Particle(x, y));
 }
-
-
-
 
 mouseParticle = particles[0];
 
@@ -27,35 +30,55 @@ function draw (e){
 	var dtime = new Date().getTime();
 	canvas.clear();
 
-	function distanceCheck (particleCheck){
-		particles.forEach(function (particle){
-			var distance = particleCheck.distanceTo(particle);
+	for(var i = 0, l = particles.length; i < l; i++){
+		var particle 	= particles[i];
+
+		particle.translate(particle.vector, {apply: true, scale: CONSTANTS.speedScale});
+
+		if(particle.x < (0-CONSTANTS.distanceCheck)
+		|| particle.x > (canvas.el.width+CONSTANTS.distanceCheck)
+		|| particle.y < (0-CONSTANTS.distanceCheck)
+		|| particle.y > (canvas.el.height+CONSTANTS.distanceCheck)){
+			var x = Math.round(Math.random()*canvas.el.width),
+					y = Math.round(Math.random()*canvas.el.height);
+			
+			particles[i].vector.reverse({apply:true});
+		}
+			
+	}
+
+	for(var i = 0, l = particles.length; i < l; i++){
+		var slicedParticles = particles.slice(i, particles.length),
+				particleCheck 	= particles[i];
+
+		for(var k = 0, p = slicedParticles.length; k < p; k++){
+			var particle 	= slicedParticles[k],
+					distance 	= particleCheck.distanceTo(particle);
 			
 			if(distance < CONSTANTS.distanceCheck) {
 				var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
-					style 	= 'rgba(200, 0, 0, '+opacity.toFixed(1)+')';
+						style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';//CONSTANTS.strokeStyle.replace('{$opacity}', opacity.toFixed(2));//'rgba(0, 200, 0, '+opacity.toFixed(2)+')';
 
-				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: 0.1, strokeStyle: style})
+				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style})
 			}
-		})
+		}
+
+		particleCheck.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle: CONSTANTS.particleColor});
 	}
 	
-	particles.forEach(distanceCheck)
-	
 
-	particles.forEach(function (particle){
-		particle.draw(canvas.ctx, {radius:0.5});
+/*	particles.forEach(function (particle){
 		var distance = particle.distanceTo(mouseParticle);
 		
 		if(distance < CONSTANTS.distanceCheck) {
 			var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
 					style 	= 'rgba(200, 0, 0, '+opacity.toFixed(2)+')';
 
-			particle.lineTo(canvas.ctx, mouseParticle, {lineWidth: 0.1, strokeStyle: style})
+			particle.lineTo(canvas.ctx, mouseParticle, {lineWidth: 0.5, strokeStyle: style})
 		}
-	});
+	});*/
 
-	mouseParticle.draw(canvas.ctx, {radius: 1.5, fillStyle:'green', strokeStyle: 'green'});
+	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle:'tomato', strokeStyle: 'tomato'});
 	dtime = new Date().getTime()-dtime;
 	console.log(dtime);
 

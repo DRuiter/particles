@@ -1,6 +1,15 @@
 function Particle (x, y){
 	Point.call(this, x, y);
 
+	var vx = Math.round(Math.random()*2)-Math.round(Math.random()*4),
+			vy = Math.round(Math.random()*2)-Math.round(Math.random()*4);
+
+	while(vx === 0 && vy === 0){
+		vx = Math.round(Math.random()*2)-Math.round(Math.random()*4);
+		vy = Math.round(Math.random()*2)-Math.round(Math.random()*4);
+	}
+
+	this.vector = new DDVector(vx, vy);
 	this.bounding = 75;
 }
 
@@ -27,6 +36,8 @@ Particle.prototype.drawBoundingBox = function (ctx, options){
 	options.stroke = typeof options.stroke === 'boolean' ? options.stroke : true; 
 
 	this.getBoundingBox().draw(ctx, options);
+
+	return this;
 }
 
 Particle.prototype.isIntersecting = function (particle){
