@@ -2,7 +2,7 @@ CONSTANTS = {
 	distanceCheck: 50,
 	numberOfParticles: 200,
 	particleColor: 'rgb(255,255,255)',
-	particleSize: 0.001,
+	particleSize: 0.25,
 	strokeStyle: 'rgba(255, 255, 255, {$opacity})',
 	lineWidth: 0.5,
 	speedScale: 0.25
@@ -26,9 +26,20 @@ mouseParticle = particles[0];
 
 window.requestAnimationFrame(draw);
 
+var start = 0;
+
 function draw (e){
-	var dtime = new Date().getTime();
+/*	if((e-start) > 18) 
+		console.warn(e-start);
+	else
+		console.log(e-start);
+	start = e;*/
+
+	//var dtime = new Date().getTime();
 	canvas.clear();
+
+	//CONSTANTS.distanceCheck = dynDistance.get();
+	CONSTANTS.speedScale 		= dynSpeed.get();
 
 	for(var i = 0, l = particles.length; i < l; i++){
 		var particle 	= particles[i];
@@ -42,7 +53,7 @@ function draw (e){
 			var x = Math.round(Math.random()*canvas.el.width),
 					y = Math.round(Math.random()*canvas.el.height);
 			
-			particles[i].vector.reverse({apply:true});
+			particle.vector.reverse({apply:true});
 		}
 			
 	}
@@ -57,13 +68,15 @@ function draw (e){
 			
 			if(distance < CONSTANTS.distanceCheck) {
 				var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
-						style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';//CONSTANTS.strokeStyle.replace('{$opacity}', opacity.toFixed(2));//'rgba(0, 200, 0, '+opacity.toFixed(2)+')';
+						style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';
 
 				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style})
 			}
 		}
 
 		particleCheck.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle: CONSTANTS.particleColor});
+		
+		delete slicedParticles;
 	}
 	
 
@@ -79,10 +92,10 @@ function draw (e){
 	});*/
 
 	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle:'tomato', strokeStyle: 'tomato'});
-	dtime = new Date().getTime()-dtime;
+	//dtime = new Date().getTime()-dtime;
 	//console.log(dtime);
 
-	window.requestAnimationFrame(draw);
+	requestAnimationFrame(draw);
 }
 
 window.onmousemove = function (e){

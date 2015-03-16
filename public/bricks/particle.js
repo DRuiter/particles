@@ -15,6 +15,23 @@ function Particle (x, y){
 
 Particle.prototype = Object.create(Point.prototype);
 
+Particle.prototype.draw = function(ctx, options){
+	if(!ctx.canvas || !ctx) throw 'Point.draw > No context specified';
+	if(options == null) options = {};
+
+	ctx.fillStyle = options.fillStyle || 'red';
+	ctx.strokeStyle = options.strokeStyle || '#ddd';
+
+	var radius = options.radius || 1.5;
+
+	ctx.beginPath();
+	ctx.arc(this.x, this.y, radius, 0, Math.PI*2, true);
+	ctx.closePath();
+	ctx.fill();
+
+	return this;
+}
+
 Particle.prototype.getBoundingBox = function (override){
 	var bounding 	= override || this.bounding,
 			bValue		= bounding/2,

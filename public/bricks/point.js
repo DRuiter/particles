@@ -10,7 +10,7 @@ Point.prototype.draw = function (ctx, options){
 	if(options == null) options = {};
 
 	ctx.fillStyle = options.fillStyle || 'red';
-	ctx.strokeStyle = options.fillStyle || '#ddd';
+	ctx.strokeStyle = options.strokeStyle || '#ddd';
 
 	var radius = options.radius || 1.5;
 

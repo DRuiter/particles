@@ -35,6 +35,7 @@ io.on('connection', function (socket) {
 	}
 
 	controllers.press('A', function (data){
-		console.log('wat', data.id);
+		socket.emit('tap');
 	}); 
 });
+
