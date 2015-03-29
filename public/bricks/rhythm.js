@@ -3,7 +3,7 @@ function Rhythm(){
 	this.bpm = 1;
 
 	this.taps = [];
-	this.beatIntervalID;
+	this.beatIntervalID = undefined;
 }
 
 Rhythm.prototype._calculateBPM = function(){
@@ -14,23 +14,23 @@ Rhythm.prototype._calculateBPM = function(){
 	return this.taps
 		.map(function (item, index, array){
 			if(index === array.length){
-				return false
+				return false;
 			}
 
 			var reverseIndex 	= array.length-index,
 					diffMS 				= Math.abs(array[reverseIndex]-array[reverseIndex-1]);
 
-			return diffMS;		
+			return diffMS;
 		})
 		.filter(Boolean)
 		.reduce(function (prev, cur, index, array){
 			if(index === array.length-1){
-				return (prev+cur)/array.length
+				return (prev+cur)/array.length;
 			}
 
 			return prev+cur;
 		});
-}
+};
 
 Rhythm.prototype.tap = function(){
 	var self = this;
@@ -53,7 +53,7 @@ Rhythm.prototype.tap = function(){
 			self.emit('beat', self.bpm, self);
 		}, this.bpm);
 	}
-}
+};
 
 Rhythm.prototype.on = function(eventName, callback){
 	if(this.map[eventName]){
@@ -61,7 +61,7 @@ Rhythm.prototype.on = function(eventName, callback){
 	} else {
 		this.map[eventName] = [callback];
 	}
-}
+};
 
 Rhythm.prototype.emit = function(eventName, data){
 	if(this.map[eventName]){
@@ -69,4 +69,4 @@ Rhythm.prototype.emit = function(eventName, data){
 			callback(data);
 		});
 	}
-}
+};

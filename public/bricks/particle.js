@@ -17,7 +17,7 @@ Particle.prototype = Object.create(Point.prototype);
 
 Particle.prototype.draw = function(ctx, options){
 	if(!ctx.canvas || !ctx) throw 'Point.draw > No context specified';
-	if(options == null) options = {};
+	if(!options) options = {};
 
 	ctx.fillStyle = options.fillStyle || 'red';
 	ctx.strokeStyle = options.strokeStyle || '#ddd';
@@ -30,7 +30,7 @@ Particle.prototype.draw = function(ctx, options){
 	ctx.fill();
 
 	return this;
-}
+};
 
 Particle.prototype.getBoundingBox = function (override){
 	var bounding 	= override || this.bounding,
@@ -43,19 +43,19 @@ Particle.prototype.getBoundingBox = function (override){
 			];
 
 	return new Geometry(box);
-}
+};
 
 Particle.prototype.drawBoundingBox = function (ctx, options){
 	if(!ctx.canvas || !ctx) throw 'Particle.drawBoundingBox > No context specified';
 	if(!options) options = {};
 
 	options.fill = options.fill || false;
-	options.stroke = typeof options.stroke === 'boolean' ? options.stroke : true; 
+	options.stroke = typeof options.stroke === 'boolean' ? options.stroke : true;
 
 	this.getBoundingBox().draw(ctx, options);
 
 	return this;
-}
+};
 
 Particle.prototype.isIntersecting = function (particle){
 	var rect1 = this.getBoundingBox(),
@@ -73,8 +73,8 @@ Particle.prototype.isIntersecting = function (particle){
 				bottom: rect2.points[2].y
 			};
 
-	return !(r2.left > r1.right 
-					|| r2.right < r1.left 
-					|| r2.top > r1.bottom 
-					|| r2.bottom < r1.top);
-}
+	return !(r2.left > r1.right ||
+		 			r2.right < r1.left 	||
+					r2.top > r1.bottom	||
+					r2.bottom < r1.top);
+};

@@ -29,13 +29,12 @@ controllers = new XboxControllers(gamepad);
 io.on('connection', function (socket) {
 	console.log(socket.id, ' Connected');
 
-	// List the state of all currently attached devices 
+	// List the state of all currently attached devices
 	for (var i = 0, l = gamepad.numDevices(); i < l; i++) {
 	  console.log(i, gamepad.deviceAtIndex());
 	}
 
 	controllers.press('A', function (data){
 		socket.emit('tap');
-	}); 
+	});
 });
-

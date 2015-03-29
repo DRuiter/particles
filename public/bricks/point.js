@@ -7,7 +7,7 @@ function Point(x, y){
 
 Point.prototype.draw = function (ctx, options){
 	if(!ctx.canvas || !ctx) throw 'Point.draw > No context specified';
-	if(options == null) options = {};
+	if(!options) options = {};
 
 	ctx.fillStyle = options.fillStyle || 'red';
 	ctx.strokeStyle = options.strokeStyle || '#ddd';
@@ -20,16 +20,16 @@ Point.prototype.draw = function (ctx, options){
 	ctx.fill();
 
 	return this;
-}
+};
 
 Point.prototype.moveTo = function (x, y){
 	this.x = x;
 	this.y = y;
-}
+};
 
 Point.prototype.lineTo = function (ctx, Point, options){
 	if(!ctx.canvas || !ctx) throw 'Point.lineTo > No context specified';
-	if(options == null) options = {};
+	if(!options) options = {};
 
 	ctx.strokeStyle = options.strokeStyle || 'green';
 	ctx.lineWidth 	= options.lineWidth || 2;
@@ -41,21 +41,21 @@ Point.prototype.lineTo = function (ctx, Point, options){
 	ctx.stroke();
 
 	return this;
-}
+};
 
 Point.prototype.distanceTo = function (Point){
 	var xs = Point.x - this.x;
   var ys = Point.y - this.y;
 
   return Math.sqrt( (xs * xs) + (ys * ys));
-}
+};
 
 Point.prototype.copy = function (){
 	return new Point(this.x, this.y);
-}
+};
 
 Point.prototype.get2DVector = function (Point, options){
-	if(options == null) options = {};
+	if(!options) options = {};
 
 	options.reverse = options.reverse || false;
 
@@ -70,11 +70,11 @@ Point.prototype.get2DVector = function (Point, options){
 	}
 
 	return new DDVector(x, y);
-}
+};
 
 Point.prototype.translate = function (DDVector, options) {
-	if(DDVector == null) throw 'Point.translate > No 2DVector specified';
-	if(options == null) options = {};
+	if(!DDVector) throw 'Point.translate > No 2DVector specified';
+	if(!options) options = {};
 
 	options.scale = options.scale || 1;
 	options.apply = options.apply || false;
@@ -88,10 +88,10 @@ Point.prototype.translate = function (DDVector, options) {
 	} else {
 		return new Point(x, y);
 	}
-}
+};
 
 Point.prototype.offset = function (x, y, options){
-	if(options == null) options = {};
+	if(!options) options = {};
 
 	options.apply = options.apply || false;
 
@@ -101,4 +101,4 @@ Point.prototype.offset = function (x, y, options){
 	} else {
 		return new Point(this.x+x, this.y+y);
 	}
-}
+};

@@ -6,7 +6,7 @@ CONSTANTS = {
 	strokeStyle: 'rgba(255, 255, 255, {$opacity})',
 	lineWidth: 0.5,
 	speedScale: 0.25
-}
+};
 
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
 
@@ -29,7 +29,7 @@ window.requestAnimationFrame(draw);
 var start = 0;
 
 function draw (e){
-/*	if((e-start) > 18) 
+/*	if((e-start) > 18)
 		console.warn(e-start);
 	else
 		console.log(e-start);
@@ -46,16 +46,16 @@ function draw (e){
 
 		particle.translate(particle.vector, {apply: true, scale: CONSTANTS.speedScale});
 
-		if(particle.x < (0-CONSTANTS.distanceCheck)
-		|| particle.x > (canvas.el.width+CONSTANTS.distanceCheck)
-		|| particle.y < (0-CONSTANTS.distanceCheck)
-		|| particle.y > (canvas.el.height+CONSTANTS.distanceCheck)){
+		if(	particle.x < (0-CONSTANTS.distanceCheck)	||
+				particle.x > (canvas.el.width+CONSTANTS.distanceCheck) ||
+				particle.y < (0-CONSTANTS.distanceCheck) ||
+				particle.y > (canvas.el.height+CONSTANTS.distanceCheck)){
 			var x = Math.round(Math.random()*canvas.el.width),
 					y = Math.round(Math.random()*canvas.el.height);
-			
+
 			particle.vector.reverse({apply:true});
 		}
-			
+
 	}
 
 	for(var i = 0, l = particles.length; i < l; i++){
@@ -65,24 +65,22 @@ function draw (e){
 		for(var k = 0, p = slicedParticles.length; k < p; k++){
 			var particle 	= slicedParticles[k],
 					distance 	= particleCheck.distanceTo(particle);
-			
+
 			if(distance < CONSTANTS.distanceCheck) {
 				var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
 						style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';
 
-				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style})
+				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style});
 			}
 		}
 
 		particleCheck.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle: CONSTANTS.particleColor});
-		
-		delete slicedParticles;
 	}
-	
+
 
 /*	particles.forEach(function (particle){
 		var distance = particle.distanceTo(mouseParticle);
-		
+
 		if(distance < CONSTANTS.distanceCheck) {
 			var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
 					style 	= 'rgba(200, 0, 0, '+opacity.toFixed(2)+')';
@@ -100,18 +98,18 @@ function draw (e){
 
 window.onmousemove = function (e){
 	mouseParticle.moveTo(e.clientX, e.clientY);
-}
+};
 
 window.onresize = function(e){
 	canvas.init();
-}
+};
 
 window.onmousewheel = function (e){
 	if(e.deltaY < 0) CONSTANTS.distanceCheck += 10;
 	if(e.deltaY > 0) {
 		if(CONSTANTS.distanceCheck-10 > 0) CONSTANTS.distanceCheck -= 10;
 	}
-}
+};
 
 /*
 	Update particle distance comparison to only do it for each particle > other particles once

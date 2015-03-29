@@ -5,16 +5,16 @@ function DynamicInteger (integer, options){
 	this._ratio 		= options.ratio || 0.5;
 
 	this._pulseInterval	= options.pulseInterval || 500;
-	this._intervalID;
+	this._intervalID = undefined;
 }
 
 DynamicInteger.prototype._min = function(){
 	return this._integer*this._ratio;
-}
+};
 
 DynamicInteger.prototype._max = function(){
 	return this._integer*(this._ratio+1);
-}
+};
 
 DynamicInteger.prototype.value = function(){
 	if(!this._pulsing) return this._integer;
@@ -23,14 +23,14 @@ DynamicInteger.prototype.value = function(){
 			atAnimationPercentage	= atAnimationMS/this._pulseDuration;
 
 	return this._min()+(this._integer*atAnimationPercentage);
-}
+};
 DynamicInteger.prototype.get = DynamicInteger.prototype.value;
 
 DynamicInteger.prototype.set = function (integer){
 	this._integer = integer;
-}
+};
 
-DynamicInteger.prototype._pulse = function (durationMS, stepMS){
+DynamicInteger.prototype._pulse = function (durationMS, stepMillis){
 	var self = this;
 
 	if(!durationMS) durationMS = this._pulseInterval;
@@ -40,7 +40,7 @@ DynamicInteger.prototype._pulse = function (durationMS, stepMS){
 	var max 		= this._max(),
 			min 		= this._min(),
 			val 		= this.value(),
-			stepMS	= stepMS ? stepMS : 16,
+			stepMS	= stepMillis ? stepMillis : 16,
 			steps 	= Math.floor(durationMS/stepMS),
 			stepDec	= (max-val)/steps,
 			curStep = 1;
@@ -59,10 +59,10 @@ DynamicInteger.prototype._pulse = function (durationMS, stepMS){
 		self.set(currentValue);
 		curStep++;
 	}, stepMS);
-}
+};
 
 DynamicInteger.prototype.pulse = function (durationMS){
 	this._pulsing = true;
 	this._pulseStart = new Date().getTime();
 	this._pulseDuration = durationMS;
-}
+};

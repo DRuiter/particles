@@ -24,8 +24,8 @@ DDVector.prototype.reverse = function (options){
 	} else {
 		return new DDVector(rx, ry);
 	}
-}
+};
 
 DDVector.prototype.angleFromVector = function ( vec ){
-	return Math.acos(((this.x*vec.x)+(this.y*vec.y))/(this.magnitude*vec.magnitude)) //(A.B)/(A.mag*B.mag)
-}
+	return Math.acos(((this.x*vec.x)+(this.y*vec.y))/(this.magnitude*vec.magnitude)); //(A.B)/(A.mag*B.mag)
+};

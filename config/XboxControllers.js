@@ -55,11 +55,11 @@ XboxControllers.prototype.press = function (options, callback){
 	if(typeof options === 'object' && typeof options.id === 'number'){
 		eventName += options.id+':';
 	}
-	
+
 	eventName += 'press:'+key;
 
 	this.on(eventName, callback);
-}
+};
 
 XboxControllers.prototype.move = function (options, callback){
 	var key = typeof options === 'object' ? options.key : options,
@@ -68,11 +68,10 @@ XboxControllers.prototype.move = function (options, callback){
 	if(typeof options === 'object' && typeof options.id === 'number'){
 		eventName = options.id+':';
 	}
-	
+
 	eventName += 'move:'+key;
 
 	this.on(eventName, callback);
-}
-
+};
 
 module.exports = XboxControllers;
