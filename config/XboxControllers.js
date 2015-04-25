@@ -33,6 +33,8 @@ function XboxControllers (gamepad){
 		var idPrefix 	= id+':',
 				eventName	= 'move:'+move[axis];
 
+		console.log(eventName, idPrefix+eventName);
+
 		self.emit(idPrefix+eventName, {id: id, value: value});
 		self.emit(eventName, {id: id, value: value});
 	});
@@ -63,7 +65,7 @@ XboxControllers.prototype.press = function (options, callback){
 
 XboxControllers.prototype.move = function (options, callback){
 	var key = typeof options === 'object' ? options.key : options,
-			eventName;
+			eventName = '';
 
 	if(typeof options === 'object' && typeof options.id === 'number'){
 		eventName = options.id+':';
