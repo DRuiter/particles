@@ -10,6 +10,9 @@
 		<script src='bricks/particle-emitter.js'></script>
 		<script src='bricks/dynamic-integer.js'></script>
 		<script src='bricks/rhythm.js'></script>
+		<script src='bricks/audio-ctx.js'></script>
+		<script src='bricks/timed-buffer.js'></script>
+		<script src='bricks/audio-buffer.js'></script>
 		<script src='http://127.0.0.1:8080/socket.io/socket.io.js'></script>
 		<script tpye='text/javascriipt' src='socket.js'></script>
 		<style>
@@ -24,6 +27,15 @@
 				background-color:#000;
 				opacity:1;
 				position:absolute;
+				z-index: 0;
+			}
+
+			audio {
+				display:block;
+				position:absolute;
+				left:0;
+				top:0;
+				z-index:1;
 			}
 
 			#test {
@@ -35,8 +47,11 @@
 			}
 		</style>
 	</head>
-	
+
 	<body>
+		<audio src="audio/Tycho - Awake.mp3" controls>
+
+		</audio>
 		<canvas id='shadow'></canvas>
 		<script type='text/javascript' src='custom.js'></script>
 	</body>

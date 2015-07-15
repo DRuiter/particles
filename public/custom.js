@@ -1,4 +1,4 @@
-CONSTANTS = {
+window.CONSTANTS = {
 	distanceCheck: 50,
 	numberOfParticles: 200,
 	particleColor: 'rgb(255,255,255)',
@@ -7,6 +7,13 @@ CONSTANTS = {
 	lineWidth: 0.5,
 	speedScale: 0.25
 };
+
+var CTX 		= new AudioCtx(document.getElementsByTagName('audio')[0]),
+		BUFFER 	= new CustomAudioBuffer(10000);
+
+setInterval(function(){
+	if(CTX.isPlaying()) BUFFER.push(CTX.getFFT());
+}, 50);
 
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
 
@@ -40,8 +47,9 @@ function draw (e){
 
 	//CONSTANTS.distanceCheck = dynDistance.get();
 	CONSTANTS.speedScale 		= dynSpeed.get();
+	var i = 0;
 
-	for(var i = 0, l = particles.length; i < l; i++){
+	for(i = 0, l = particles.length; i < l; i++){
 		var particle 	= particles[i];
 
 		particle.translate(particle.vector, {apply: true, scale: CONSTANTS.speedScale});
@@ -58,19 +66,19 @@ function draw (e){
 
 	}
 
-	for(var i = 0, l = particles.length; i < l; i++){
+	for(i = 0, l = particles.length; i < l; i++){
 		var slicedParticles = particles.slice(i, particles.length),
 				particleCheck 	= particles[i];
 
 		for(var k = 0, p = slicedParticles.length; k < p; k++){
-			var particle 	= slicedParticles[k],
-					distance 	= particleCheck.distanceTo(particle);
+			var part 			= slicedParticles[k],
+					distance 	= particleCheck.distanceTo(part);
 
 			if(distance < CONSTANTS.distanceCheck) {
 				var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
 						style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';
 
-				particle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style});
+				part.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style});
 			}
 		}
 
@@ -92,6 +100,9 @@ function draw (e){
 	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle:'tomato', strokeStyle: 'tomato'});
 	//dtime = new Date().getTime()-dtime;
 	//console.log(dtime);
+
+	//console.clear();
+	//console.log(CTX.getFFT());
 
 	requestAnimationFrame(draw);
 }
