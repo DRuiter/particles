@@ -9,10 +9,12 @@ window.CONSTANTS = {
 };
 
 var CTX 		= new AudioCtx(document.getElementsByTagName('audio')[0]),
-		BUFFER 	= new CustomAudioBuffer(10000);
+		BUFFER 	= new CustomAudioBuffer(5000, {minDB:CTX.analyser.minDecibels, maxDB:CTX.analyser.maxDecibels});
 
 setInterval(function(){
-	if(CTX.isPlaying()) BUFFER.push(CTX.getFFT());
+	if(CTX.isPlaying()) BUFFER.push(CTX.getFFT('float'));
+
+	//console.log(BUFFER.getSample(500, {addHistory:true}));
 }, 50);
 
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
