@@ -22,7 +22,7 @@ Geometry.prototype.draw = function (ctx, options){
 
 		ctx.lineTo(p.x, p.y);
 
-		if(i === a.length-1) ctx.lineTo(self.points[0].x, self.points[0].y);
+		if(i === a.length - 1) ctx.lineTo(self.points[0].x, self.points[0].y);
 	});
 
 	ctx.closePath();
@@ -32,11 +32,11 @@ Geometry.prototype.draw = function (ctx, options){
 };
 
 Geometry.prototype.width = function(){
-	return this.points[1].x-this.points[0].x;
+	return this.points[1].x - this.points[0].x;
 };
 
 Geometry.prototype.height = function(){
-	return this.points[0].y-this.points[2].y;
+	return this.points[0].y - this.points[2].y;
 };
 
 Geometry.prototype.getCenter = function (){
@@ -47,7 +47,7 @@ Geometry.prototype.getCenter = function (){
 		ty += p.y;
 	});
 
-	return new Point(tx/this.points.length, ty/this.points.length);
+	return new Point(tx / this.points.length, ty / this.points.length);
 };
 
 Geometry.prototype.translate = function (DDVector, options){

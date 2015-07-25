@@ -1,14 +1,14 @@
 function Canvas(element){
-	this.el 	= element;
-	this.ctx 	= element.getContext('2d');
-	this.bgcolor= element.style.backgroundColor;
+	this.el 			= element;
+	this.ctx 			= element.getContext('2d');
+	this.bgcolor	= element.style.backgroundColor;
 
-	return this;
+	return this.init();
 }
 
-Canvas.prototype.init = function(){
-	this.el.width 	= window.innerWidth;
-	this.el.height	= window.innerHeight;
+Canvas.prototype.init = function(width, height){
+	this.el.width 	= width || window.innerWidth;
+	this.el.height	= height || window.innerHeight;
 
 	return this;
 };

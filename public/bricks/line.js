@@ -17,5 +17,5 @@ Line.prototype.draw = function (ctx, options){
 };
 
 Line.prototype.getCenter = function(){
-	return new Point((this.points[0].x+this.points[1].x)/2, (this.points[0].y+this.points[1].y)/2);
+	return new Point((this.points[0].x + this.points[1].x) / 2, (this.points[0].y + this.points[1].y) / 2);
 };

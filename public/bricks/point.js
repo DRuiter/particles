@@ -15,7 +15,7 @@ Point.prototype.draw = function (ctx, options){
 	var radius = options.radius || 1.5;
 
 	ctx.beginPath();
-	ctx.arc(this.x, this.y, radius, 0, Math.PI*2, true);
+	ctx.arc(this.x, this.y, radius, 0, Math.PI * 2, true);
 	ctx.closePath();
 	ctx.fill();
 
@@ -62,11 +62,11 @@ Point.prototype.get2DVector = function (Point, options){
 	var x,y;
 
 	if(!options.reverse) {
-		x = this.x-Point.x;
-		y = this.y-Point.y;
+		x = this.x - Point.x;
+		y = this.y - Point.y;
 	} else {
-		x = Point.x-this.x;
-		y = Point.y-this.y;
+		x = Point.x - this.x;
+		y = Point.y - this.y;
 	}
 
 	return new DDVector(x, y);
@@ -96,9 +96,9 @@ Point.prototype.offset = function (x, y, options){
 	options.apply = options.apply || false;
 
 	if(options.apply){
-		this.x = this.x+x;
-		this.y = this.y+y;
+		this.x = this.x + x;
+		this.y = this.y + y;
 	} else {
-		return new Point(this.x+x, this.y+y);
+		return new Point(this.x + x, this.y + y);
 	}
 };

@@ -1,16 +1,17 @@
 function Particle (x, y){
 	Point.call(this, x, y);
 
-	var vx = Math.round(Math.random()*2)-Math.round(Math.random()*4),
-			vy = Math.round(Math.random()*2)-Math.round(Math.random()*4);
+	var vx = Math.round(Math.random() * 2) - Math.round(Math.random() * 4),
+			vy = Math.round(Math.random() * 2) - Math.round(Math.random() * 4);
 
 	while(vx === 0 && vy === 0){
-		vx = Math.round(Math.random()*2)-Math.round(Math.random()*4);
-		vy = Math.round(Math.random()*2)-Math.round(Math.random()*4);
+		vx = Math.round(Math.random() * 2) - Math.round(Math.random() * 4);
+		vy = Math.round(Math.random() * 2) - Math.round(Math.random() * 4);
 	}
 
-	this.vector = new DDVector(vx, vy);
-	this.bounding = 75;
+	this.vector 	= new DDVector(vx, vy);
+	this.bounding	= 75;
+	this.radius 		= 1.5;
 }
 
 Particle.prototype = Object.create(Point.prototype);
@@ -19,13 +20,13 @@ Particle.prototype.draw = function(ctx, options){
 	if(!ctx.canvas || !ctx) throw 'Point.draw > No context specified';
 	if(!options) options = {};
 
-	ctx.fillStyle = options.fillStyle || 'red';
+	ctx.fillStyle 	= options.fillStyle || 'red';
 	ctx.strokeStyle = options.strokeStyle || '#ddd';
 
-	var radius = options.radius || 1.5;
+	var radius = options.radius || this.radius;
 
 	ctx.beginPath();
-	ctx.arc(this.x, this.y, radius, 0, Math.PI*2, true);
+	ctx.arc(this.x, this.y, radius, 0, Math.PI * 2, true);
 	ctx.closePath();
 	ctx.fill();
 
