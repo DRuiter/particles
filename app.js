@@ -34,7 +34,13 @@ io.on('connection', function (socket) {
 	  console.log(i, gamepad.deviceAtIndex());
 	}
 
-	controllers.press('A', function (data){
-		socket.emit('tap');
+	var listener 	= function (data){
+				socket.emit('tap');
+			},
+			eventName = controllers.press('A', listener);
+
+	socket.on('disconnect', function (){
+		controllers.removeListener(eventName, listener);
+		console.log(socket.id, ' Disconnected');
 	});
 });

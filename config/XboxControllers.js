@@ -61,6 +61,8 @@ XboxControllers.prototype.press = function (options, callback){
 	eventName += 'press:'+key;
 
 	this.on(eventName, callback);
+
+	return eventName;
 };
 
 XboxControllers.prototype.move = function (options, callback){
@@ -74,6 +76,8 @@ XboxControllers.prototype.move = function (options, callback){
 	eventName += 'move:'+key;
 
 	this.on(eventName, callback);
+
+	return eventName;
 };
 
 module.exports = XboxControllers;

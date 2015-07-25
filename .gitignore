@@ -1,3 +1,4 @@
 #exlclude folders
 /node_modules
 /public/audio
+.DS_Store

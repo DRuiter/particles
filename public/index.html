@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>shadow test</title>
+		<title>Particles</title>
 		<script src='bricks/point.js'></script>
 		<script src='bricks/2dvector.js'></script>
 		<script src='bricks/line.js'></script>
@@ -13,10 +13,11 @@
 		<script src='bricks/audio-ctx.js'></script>
 		<script src='bricks/timed-buffer.js'></script>
 		<script src='bricks/audio-buffer.js'></script>
+		<script src='bricks/graphs/graph.js'></script>
 		<script src='http://127.0.0.1:8080/socket.io/socket.io.js'></script>
-		<script tpye='text/javascriipt' src='socket.js'></script>
+		<script tpye='text/javascript' src='socket.js'></script>
 		<style>
-			html, body, canvas {
+			html, body{
 				width:100%;
 				height:100%;
 				margin:0;
@@ -24,6 +25,8 @@
 			}
 
 			canvas {
+				width:100%;
+				height:80%;
 				background-color:#000;
 				opacity:1;
 				position:absolute;
@@ -38,6 +41,21 @@
 				z-index:1;
 			}
 
+			#graphs {
+				position:absolute;
+				width:100%;
+				height:20%;
+				top:80%;
+				background-color:#333;
+			}
+
+			.graph {
+				width:33.33333333333%;
+				height:100%;
+				position:relative;
+				float:left;
+			}
+
 			#test {
 				width:50%;
 				height:200px;
@@ -49,10 +67,18 @@
 	</head>
 
 	<body>
-		<audio src="audio/Tycho - Awake.mp3" controls>
+		<audio src="audio/awake.mp3" controls>
+		<!-- <audio src="audio/throne.mp3" controls> -->
+		<!-- <audio src="audio/animals.mp3" controls> -->
+		<!-- <audio src="audio/etherwood.mp3" controls> -->
 
 		</audio>
 		<canvas id='shadow'></canvas>
+		<div id="graphs">
+			<canvas class="graph"></canvas>
+			<canvas class="graph"></canvas>
+			<canvas class="graph"></canvas>
+		</div>
 		<script type='text/javascript' src='custom.js'></script>
 	</body>
 </html>

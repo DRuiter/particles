@@ -70,8 +70,22 @@ TimedBuffer.prototype._setLength = function ( length ) {
   this.length = length;
 };
 
-TimedBuffer.prototype.getLast = function (){
-  return this.buffer[0];
+TimedBuffer.prototype.getLast = function (options){
+  if(!options) options = {};
+
+  options.toArray = options.toArray || false;
+  var buffer = this.buffer[0];
+
+  if(options.toArray){
+    var array = [];
+    for(var i = 0, l = buffer.length; i < l; i++){
+      array.push(buffer[i]);
+    }
+
+    return array;
+  }
+
+  return buffer;
 };
 
 TimedBuffer.prototype.getByTime = function ( timeMS, skipMS ) {

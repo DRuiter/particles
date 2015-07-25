@@ -25,6 +25,15 @@ CustomAudioBuffer.prototype.getSample = function (timeMS, options){
   }
 };
 
+CustomAudioBuffer.prototype.getLastWithHistory = function (timeMS, options){
+  if(!timeMS) throw new Error('Missing argument timeMS');
+  if(!options) options = {};
+
+  var last = this.getLast({toArray: true});
+
+  return this._calculateHistory(last, timeMS);
+};
+
 CustomAudioBuffer.prototype._calculateAverage = function (buffer){
   if(!buffer.length) return [];
 
@@ -51,7 +60,9 @@ CustomAudioBuffer.prototype._calculateAverage = function (buffer){
 };
 
 CustomAudioBuffer.prototype._calculateHistory = function (sample, timeMS){
-	var buffer        = this.getByTime(timeMS * 2), 
+  if(!sample || !timeMS) throw new Error('Missing arguments');
+
+	var buffer        = this.getByTime(timeMS * 2),
       sortedByBin 	= [],
   		mean,
   		meanDiff,

@@ -8,21 +8,21 @@ window.CONSTANTS = {
 	speedScale: 0.25
 };
 
-var CTX 		= new AudioCtx(document.getElementsByTagName('audio')[0]),
-		BUFFER 	= new CustomAudioBuffer(5000, {minDB:CTX.analyser.minDecibels, maxDB:CTX.analyser.maxDecibels});
-
-setInterval(function(){
-	if(CTX.isPlaying()) BUFFER.push(CTX.getFFT('float'));
-
-	//console.log(BUFFER.getSample(500, {addHistory:true}));
-}, 50);
+var CTX 			= new AudioCtx(document.getElementsByTagName('audio')[0], {FFTSize: 128}),
+		BUFFER 		= new CustomAudioBuffer(5000, {minDB:CTX.analyser.minDecibels, maxDB:CTX.analyser.maxDecibels}),
+		graphEls	= document.getElementsByClassName('graph'),
+		graphs 		= [
+			new BarGraph(graphEls[0].getContext('2d')),
+			new BarGraph(graphEls[1].getContext('2d')),
+			new BarGraph(graphEls[2].getContext('2d'))
+		];
 
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
 
 canvas.init();
 
 var particles = [],
-		mouseParticle = new Particle(500, 500);
+		mouseParticle = new Particle(canvas.el.width / 2, canvas.el.height / 2);
 
 for(var i = 0, l = CONSTANTS.numberOfParticles; i < l; i++){
 	var x = Math.round(Math.random()*canvas.el.width),
@@ -31,7 +31,7 @@ for(var i = 0, l = CONSTANTS.numberOfParticles; i < l; i++){
 	particles.push(new Particle(x, y));
 }
 
-mouseParticle = particles[0];
+//mouseParticle = particles[0];
 
 window.requestAnimationFrame(draw);
 
@@ -43,6 +43,33 @@ function draw (e){
 	else
 		console.log(e-start);
 	start = e;*/
+
+	if(CTX.isPlaying()) {
+		BUFFER.push(CTX.getFFT('byte'));
+
+		var sample = BUFFER.getLastWithHistory(100),
+				values = [
+					sample.map(function (item){
+						return item.value;
+					}),
+					sample.map(function (item){
+						return item.standardDeviation;
+					}),
+					sample.map(function (item){
+						return item.mean;
+					})
+				];
+
+		graphs.forEach(function(graph, index){
+			if(index === 1){
+				graph.draw(values[index], {maxValue: 10, minValue: -10});
+			} else {
+				graph.draw(values[index]);
+			}
+
+		});
+	}
+
 
 	//var dtime = new Date().getTime();
 	canvas.clear();
@@ -98,8 +125,19 @@ function draw (e){
 			particle.lineTo(canvas.ctx, mouseParticle, {lineWidth: 0.5, strokeStyle: style})
 		}
 	});*/
+	for(i = 0, l = particles.length; i < l; i++){
+		particleCheck = particles[i];
+		distance 			= particleCheck.distanceTo(mouseParticle);
 
-	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle:'tomato', strokeStyle: 'tomato'});
+		if(distance < CONSTANTS.distanceCheck){
+			opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck;
+			style 	= 'rgba(255, 255, 255, '+ opacity.toFixed(2) +')';
+
+			mouseParticle.lineTo(canvas.ctx, particleCheck, {lineWidth: CONSTANTS.lineWidth, strokeStyle: style});
+		}
+	}
+
+	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize * 4, fillStyle:'tomato', strokeStyle: 'tomato'});
 	//dtime = new Date().getTime()-dtime;
 	//console.log(dtime);
 
