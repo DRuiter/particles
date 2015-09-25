@@ -1,8 +1,12 @@
 canvas 	= new Canvas(document.getElementsByTagName('canvas')[0]);
 emitter = new ParticleEmitter(canvas, {
-	total: 1500,
+	total: 3000,
 	connect: {
-		enabled: true
+		enabled: false,
+		distance: 10
+	},
+	particle: {
+		size: 0.5
 	}
 });
 
@@ -25,6 +29,8 @@ window.onmousewheel = function (e){
 	if(e.deltaY > 0) {
 		if(emitter.connect.distance - 1 > -1) emitter.connect.distance -= 1;
 	}
+
+	console.log(emitter.connect.distance);
 };
 
 window.addEventListener('keydown', function(e){

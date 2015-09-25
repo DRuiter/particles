@@ -79,8 +79,8 @@ Point.prototype.translate = function (DDVector, options) {
 	options.scale = options.scale || 1;
 	options.apply = options.apply || false;
 
-	var x = this.x+(DDVector.x*options.scale),
-			y = this.y+(DDVector.y*options.scale);
+	var x = this.x + (DDVector.x * options.scale),
+			y = this.y + (DDVector.y * options.scale);
 
 	if(options.apply){
 		this.x = x;

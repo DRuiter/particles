@@ -28,6 +28,7 @@ Particle.prototype.draw = function(ctx, options){
 	ctx.beginPath();
 	ctx.arc(this.x, this.y, radius, 0, Math.PI * 2, true);
 	ctx.closePath();
+
 	ctx.fill();
 
 	return this;
@@ -35,12 +36,12 @@ Particle.prototype.draw = function(ctx, options){
 
 Particle.prototype.getBoundingBox = function (override){
 	var bounding 	= override || this.bounding,
-			bValue		= bounding/2,
+			bValue		= bounding / 2,
 			box 			= [
-				new Point(this.x-bValue, this.y-bValue), //tl
-				new Point(this.x+bValue, this.y-bValue), //tr
-				new Point(this.x+bValue, this.y+bValue), //br
-				new Point(this.x-bValue, this.y+bValue)  //bl
+				new Point(this.x - bValue, this.y - bValue), //tl
+				new Point(this.x + bValue, this.y - bValue), //tr
+				new Point(this.x + bValue, this.y + bValue), //br
+				new Point(this.x - bValue, this.y + bValue)  //bl
 			];
 
 	return new Geometry(box);
