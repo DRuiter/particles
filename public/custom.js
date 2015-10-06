@@ -77,18 +77,6 @@ function draw (e){
 		particleCheck.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle: CONSTANTS.particleColor});
 	}
 
-
-/*	particles.forEach(function (particle){
-		var distance = particle.distanceTo(mouseParticle);
-
-		if(distance < CONSTANTS.distanceCheck) {
-			var opacity = (CONSTANTS.distanceCheck-distance)/CONSTANTS.distanceCheck,
-					style 	= 'rgba(200, 0, 0, '+opacity.toFixed(2)+')';
-
-			particle.lineTo(canvas.ctx, mouseParticle, {lineWidth: 0.5, strokeStyle: style})
-		}
-	});*/
-
 	mouseParticle.draw(canvas.ctx, {radius: CONSTANTS.particleSize, fillStyle:'tomato', strokeStyle: 'tomato'});
 	//dtime = new Date().getTime()-dtime;
 	//console.log(dtime);
@@ -110,10 +98,3 @@ window.onmousewheel = function (e){
 		if(CONSTANTS.distanceCheck-10 > 0) CONSTANTS.distanceCheck -= 10;
 	}
 };
-
-/*
-	Update particle distance comparison to only do it for each particle > other particles once
-
-	foreach part, index, arr
-		part.distance > (these particles) arr.slice(index, arr.length)
-*/
